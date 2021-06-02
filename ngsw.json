@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1622580623413,
+  "timestamp": 1622600812815,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -17,8 +17,8 @@
         "/assets/models/tiny_face_detector_model-weights_manifest.json",
         "/favicon.ico",
         "/index.html",
-        "/main-es2015.d7cc1ccabad160b525ae.js",
-        "/main-es5.d7cc1ccabad160b525ae.js",
+        "/main-es2015.0af4a6bd7f7da5698601.js",
+        "/main-es5.0af4a6bd7f7da5698601.js",
         "/manifest.webmanifest",
         "/polyfills-es2015.d26681d378262fd3296d.js",
         "/polyfills-es5.ca016a6f12d7e632666f.js",
@@ -42,7 +42,9 @@
         "/assets/icons/icon-512x512.png",
         "/assets/icons/icon-72x72.png",
         "/assets/icons/icon-96x96.png",
+        "/assets/images/bernie.png",
         "/assets/images/biden.png",
+        "/assets/images/npc.png",
         "/assets/images/trump.png"
       ],
       "patterns": []
@@ -58,7 +60,9 @@
     "/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
     "/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
     "/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "/assets/images/bernie.png": "62fc26b3e1eaf532999fbe145932c6512fcf40a5",
     "/assets/images/biden.png": "e17e2de05eb3d259da3515e0714fd2005d632b32",
+    "/assets/images/npc.png": "63c918d31cb9f90502460cd921fcf12c4ddbaf89",
     "/assets/images/trump.png": "dc5577b32be29c38c7facc6d92feb254ba8f0f73",
     "/assets/models/face_landmark_68_tiny_model-shard1": "3bfc170344e9c751a2151df215a2b4ffcfd6ee75",
     "/assets/models/face_landmark_68_tiny_model-weights_manifest.json": "253d2867f666fc988276d0a201648226ff63e006",
@@ -68,9 +72,9 @@
     "/assets/models/tiny_face_detector_model-shard1": "f3020debaf078347b5caaff4bf6dce2f379d20bc",
     "/assets/models/tiny_face_detector_model-weights_manifest.json": "1f9da0ddb847fcd512cb0511f6d6c90985d011e6",
     "/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/index.html": "20f515dfee70ec259e3770c621c0613718caed39",
-    "/main-es2015.d7cc1ccabad160b525ae.js": "c29e8ba3bfea474d84ab8333a1845d8a6fb983b7",
-    "/main-es5.d7cc1ccabad160b525ae.js": "9d14c0c15ad7d4b9291a4e48103621aef7b115b8",
+    "/index.html": "10b360427b431f696399a0f307e2c3a25f2697bc",
+    "/main-es2015.0af4a6bd7f7da5698601.js": "7e28595d2748a7418f0d2d73a53d32096e46d9bf",
+    "/main-es5.0af4a6bd7f7da5698601.js": "260ecfc1760d7be960a3ca39fa977d91246eb5c6",
     "/manifest.webmanifest": "24b9697778d8226b442196b2dd817081f0a6f0a2",
     "/polyfills-es2015.d26681d378262fd3296d.js": "9b0821549747e05889d161d586b63e69ef8282bb",
     "/polyfills-es5.ca016a6f12d7e632666f.js": "78a6280206953b5d56c6a649895ec0d43535baea",
