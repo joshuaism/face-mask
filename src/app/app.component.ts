@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { saveAs } from 'file-saver';
+import { Face } from 'src/app/face'
 
 import * as faceapi from 'face-api.js';
+
+var faces : Face[] = null;
+var input : HTMLImageElement = null;
 
 @Component({
   selector: 'app-root',
@@ -13,6 +17,8 @@ export class AppComponent {
 
   file: File = null;
   ready: boolean = false;
+  confidence: number = 0;
+ 
 
   async ngOnInit() {
     await faceapi.nets.tinyFaceDetector.loadFromUri('assets/models');
@@ -22,7 +28,10 @@ export class AppComponent {
   }
 
   async blockFaces(confidence: number, mask: string) {
-    if (this.file) {
+    if (faces != null && this.confidence == confidence) {
+      drawMasks(mask);
+    } else if (this.file) {
+      this.confidence = confidence;
       this.hideDownloadButton();
       let output = <HTMLCanvasElement>document.getElementById('overlay');
       let context = output.getContext("2d");
@@ -30,7 +39,7 @@ export class AppComponent {
       output.height = 40;
       context.fillStyle = "#FFA500";
       context.fillText("processing...", 10, 10);
-      let input = document.createElement("img");
+      input = document.createElement("img");
       let url = window.URL.createObjectURL(this.file);
       let source = document.createElement("img");
       source.src = "assets/images/" + mask + ".png";
@@ -39,25 +48,27 @@ export class AppComponent {
         output.width = input.width;
         output.height = input.height;
         const detections = await faceapi.detectAllFaces(input, new faceapi.SsdMobilenetv1Options({ minConfidence: confidence })).withFaceLandmarks(true);
-        context.drawImage(input, 0, 0);
-        context.fillStyle = "#000000";
         console.log(detections.length);
         detections.sort((a, b) => {return a.detection.box.area - b.detection.box.area});
+        faces = []; 
         detections.forEach(d => {
           let box = d.detection.box;
-          context.save();
-          context.translate(box.x + box.width / 2, box.y + box.height / 2);
-          context.rotate(getAngle(d.landmarks));
-          //flip
-          //context.scale(-1, 1);
-          context.drawImage(source, -box.width * .9, -source.height / source.width * box.width * .9, box.width * 1.8, source.height / source.width * box.width * 1.8);
-          context.restore();
+          let f = new Face();
+          f.source = source,
+          f.angle = getAngle(d.landmarks),
+          f.center = { x: box.x + box.width / 2, y: box.y + box.height / 2};
+          f.x = -box.width * .9;
+          f.y = -source.height / source.width * box.width * .9;
+          f.width = box.width * 1.8;
+          f.height = source.height / source.width * box.width * 1.8;
+          faces.push(f);
         });
         //faceapi.draw.drawFaceLandmarks(output, detections);
         //faceapi.draw.drawDetections(output, detections);
         let dl = document.getElementById('download');
         dl.hidden = false;
         URL.revokeObjectURL(input.src);
+        drawMasks(mask);
       }
     }
   }
@@ -66,6 +77,7 @@ export class AppComponent {
     if (files) {
       this.hideDownloadButton();
       this.file = files.item(0);
+      faces = null;
       this.blockFaces(confidence, mask);
     }
   }
@@ -94,5 +106,23 @@ function getAngle(landmarks: faceapi.FaceLandmarks68) {
   const adjacent = jawRight.x - jawLeft.x;
   const opposite = jawRight.y - jawLeft.y;
   return Math.atan2(opposite, adjacent);
+}
+
+function drawMasks(mask: String) {
+  let output = <HTMLCanvasElement>document.getElementById('overlay');
+  let context = output.getContext("2d");
+  let source = document.createElement("img");
+  source.src = "assets/images/" + mask + ".png";
+  context.drawImage(input, 0, 0);
+  context.fillStyle = "#000000";
+  faces.forEach(face => {
+    context.save();
+    context.translate(face.center.x, face.center.y);
+    context.rotate(face.angle);
+    //flip
+    //context.scale(-1, 1);
+    context.drawImage(source, face.x, face.y, face.width, face.height);
+    context.restore();
+  });
 }
 
