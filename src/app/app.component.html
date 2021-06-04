@@ -1,6 +1,6 @@
 <div *ngIf="!ready">loading models...</div>
 <div *ngIf="ready">
-    <mat-radio-group  #radioGroup="matRadioGroup" (change)="blockFaces(myslider.value *.01, radioGroup.value)">
+    <mat-radio-group  #radioGroup="matRadioGroup">
         <mat-radio-button value="none" [checked]="true">[none]</mat-radio-button>
         <mat-radio-button *ngFor="let m of masks" [value]="m">
             <img src="assets/images/{{m}}.png">

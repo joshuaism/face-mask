@@ -32,11 +32,10 @@ export class AppComponent {
   }
 
   async blockFaces(confidence: number, mask: string) {
-    if (faces != null && this.confidence == confidence) {
-      drawMasks();
-    } else if (this.file) {
-      this.confidence = confidence;
+    if (this.file) {
       this.hideDownloadButton();
+      faces = [];
+      this.boxes = [];
       let output = <HTMLCanvasElement>document.getElementById('overlay');
       this.canvas = output;
       let context = output.getContext("2d");
@@ -44,13 +43,14 @@ export class AppComponent {
       output.height = 40;
       context.fillStyle = "#FFA500";
       context.fillText("processing...", 10, 10);
+      
+      let source = this.getMaskSource(mask);
       input = document.createElement("img");
       let url = window.URL.createObjectURL(this.file);
-      let source = this.getMaskSource(mask);
+      
       input.src = url;
       faceapi.detectAllFaces(input, new faceapi.SsdMobilenetv1Options({ minConfidence: confidence })).then (
         (detections) => {
-          this.boxes = [];
           detections.sort((a, b) => {return a.box.area - b.box.area});
           detections.map((d) => this.boxes.push(d.box));
           return detections;
@@ -62,19 +62,10 @@ export class AppComponent {
         await faceapi.detectAllFaces(input, new faceapi.SsdMobilenetv1Options({ minConfidence: confidence })).withFaceLandmarks(true).then(
           (detections) => {
             detections.sort((a, b) => {return a.detection.box.area - b.detection.box.area});
-            faces = []; 
+            
             detections.forEach(d => {
               let box = d.detection.box;
-              let f = new Face();
-              f.source = source,
-              f.box = box;
-              f.angle = getAngle(d.landmarks),
-              f.center = { x: box.x + box.width / 2, y: box.y + box.height / 2};
-              f.x = -box.width * .9;
-              // assume source image is square for now
-              f.y = -box.width * .9; // -source.height / source.width * box.width * .9;
-              f.width = box.width * 1.8;
-              f.height = box.width * 1.8; // source.height / source.width * box.width * 1.8;
+              let f = new Face(source, box, d.landmarks);
               faces.push(f);
             });
             //faceapi.draw.drawFaceLandmarks(output, detections);
@@ -88,7 +79,6 @@ export class AppComponent {
         URL.revokeObjectURL(input.src);
       }
     }
-    
   }
 
   getMaskSource(mask: string): HTMLImageElement {
@@ -128,7 +118,6 @@ export class AppComponent {
     if (files) {
       this.hideDownloadButton();
       this.file = files.item(0);
-      faces = null;
       this.blockFaces(confidence, mask);
     }
   }
@@ -148,15 +137,6 @@ export class AppComponent {
     var image = output.toDataURL(filetype);
     saveAs(image, filename);
   }
-}
-
-function getAngle(landmarks: faceapi.FaceLandmarks68) {
-  const jawline = landmarks.getJawOutline()
-  const jawLeft = jawline[0];
-  const jawRight = jawline.splice(-1)[0];
-  const adjacent = jawRight.x - jawLeft.x;
-  const opposite = jawRight.y - jawLeft.y;
-  return Math.atan2(opposite, adjacent);
 }
 
 function drawMasks() {
