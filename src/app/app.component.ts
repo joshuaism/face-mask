@@ -21,7 +21,7 @@ export class AppComponent {
   confidence: number = 0;
   boxes: Box[] = [];
   canvas: HTMLCanvasElement;
-  masks: string[] = ['biden', 'trump', 'bernie', 'rage', 'troll', 'shades']
+  masks: string[] = ['biden', 'trump', 'bernie', 'npc', 'rage', 'troll', 'shades'];
  
 
   async ngOnInit() {
