@@ -8,6 +8,7 @@ export class Face {
         x: number,
         y: number
     };
+    flip: boolean;
     x: number;
     y: number;
     width: number;

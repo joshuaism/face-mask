@@ -97,12 +97,19 @@ export class AppComponent {
       let face = faces[i];
       if (face.source) {
         if (face.source.src.includes(mask)) {
-          face.source = null;
+          if (face.flip) {
+            face.source = null;
+            face.flip = false;
+          } else {
+            face.flip = true;
+          }
         } else {
           face.source = source;
+          face.flip = false;
         }
       } else {
         face.source = source;
+        face.flip = false;
       }
       drawMasks(mask);
     }
@@ -152,8 +159,9 @@ function drawMasks(mask: String) {
     context.save();
     context.translate(face.center.x, face.center.y);
     context.rotate(face.angle);
-    //flip
-    //context.scale(-1, 1);
+    if (face.flip) {
+      context.scale(-1, 1);
+    }
     if (face.source) {
       context.drawImage(face.source, face.x, face.y, face.width, face.height);
     }
