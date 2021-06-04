@@ -12,5 +12,14 @@
     </div>
     <input type="file" accept="image/*" id="input" (change)="handleFileInput($event.target.files, myslider.value * .01, radioGroup.value)">
     <input type="button" id="download" value="download image" (click)="exportAsImage()" hidden>
-    <canvas style="width:98%; padding: 1%;" id="overlay"></canvas>
+    <div style="position:relative;width:98%; padding: 1%;">
+    <canvas style="width:100%" id="overlay"></canvas>
+    <div class="box" *ngFor="let box of boxes; let i=index" 
+        [style.left.%]="box.x/canvas.width * 100" 
+        [style.top.%]="box.y/canvas.height * 100" 
+        [style.width.%]="box.width/canvas.width * 100" 
+        [style.height.%]="box.height/canvas.height * 100"
+        (click)="toggleSource(i, radioGroup.value)" ></div>
+    </div>
+    
 </div>

@@ -5,3 +5,12 @@
 .mat-radio-button img {
     width:50px;
 }
+
+.box {
+    cursor:crosshair;
+    position:absolute; 
+}
+
+.box:hover {
+    background-color: #69f0aeaa;
+}
