@@ -11,12 +11,12 @@
     position:absolute; 
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
     .box:hover {
         background-color: #69f0aeaa;
     }
 }
 
 .box:active {
-    background-color: #69f0aeaa;
+    background-color: #1e573baa;
 }
