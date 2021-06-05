@@ -1,7 +1,8 @@
-import { Box, FaceLandmarks68 } from 'face-api.js';
+import { Box, FaceLandmarks68, WithFaceDetection, WithFaceLandmarks } from 'face-api.js';
 
 export class Face {
     source: HTMLImageElement;
+    box: Box;
     angle: number;
     center: {
         x: number,
@@ -13,9 +14,11 @@ export class Face {
     width: number;
     height: number;
 
-    constructor(source: HTMLImageElement, box: Box, landmarks: FaceLandmarks68) {
+    constructor(source: HTMLImageElement, detection: WithFaceLandmarks<WithFaceDetection<{}>>) {
         this.source = source;
-        this.angle = this.getAngle(landmarks);
+        let box = detection.detection.box;
+        this.box = box;
+        this.angle = this.getAngle(detection.landmarks);
         this.center = { x: box.x + box.width / 2, y: box.y + box.height / 2};
         this.x = -box.width * .9;
         // assume source image is square for now

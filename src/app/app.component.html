@@ -14,12 +14,12 @@
     <input type="button" id="download" value="download image" (click)="exportAsImage()" hidden>
     <div style="position:relative;width:98%; padding: 1%;">
     <canvas style="width:100%" id="overlay"></canvas>
-    <div class="box" *ngFor="let box of boxes; let i=index" 
-        [style.left.%]="box.x/canvas.width * 100" 
-        [style.top.%]="box.y/canvas.height * 100" 
-        [style.width.%]="box.width/canvas.width * 100" 
-        [style.height.%]="box.height/canvas.height * 100"
-        (click)="toggleSource(i, radioGroup.value)" ></div>
+    <div class="box" *ngFor="let face of faces" 
+        [style.left.%]="face.box.x/canvas.width * 100" 
+        [style.top.%]="face.box.y/canvas.height * 100" 
+        [style.width.%]="face.box.width/canvas.width * 100" 
+        [style.height.%]="face.box.height/canvas.height * 100"
+        (click)="toggleSource(face, radioGroup.value)" ></div>
     </div>
     
 </div>
