@@ -14,6 +14,7 @@ export class AppComponent {
 
   file: File = null;
   input : HTMLImageElement = null;
+  userMask: HTMLImageElement = null;
   ready: boolean = false;
   canvas: HTMLCanvasElement;
   masks: string[] = ['biden', 'trump', 'bernie', 'npc', 'rage', 'troll', 'shades'];
@@ -72,6 +73,9 @@ export class AppComponent {
     if (mask == 'none') {
       return null;
     }
+    if (mask == "user_source") {
+      return this.userMask;
+    }
     let source = document.createElement("img");
     source.src = "assets/images/" + mask + ".png";
     return source;
@@ -80,23 +84,16 @@ export class AppComponent {
   toggleSource(face: Face, mask: string) {
     let source = this.getMaskSource(mask);
     if(face) {
-      if (face.source) {
-        if (face.source.src.includes(mask)) {
-          if (face.flip) {
-            face.source = null;
-            face.flip = false;
-          } else {
-            face.flip = true;
-          }
-        } else {
-          face.source = source;
-          face.flip = false;
-        }
-      } else {
-        face.source = source;
-        face.flip = false;
-      }
+      face.updateSource(source);
       this.drawMasks();
+    }
+  }
+
+  handleMaskInput(files: FileList) {
+    if (files) {
+      this.userMask = document.createElement("img");
+      let url = window.URL.createObjectURL(files.item(0));
+      this.userMask.src = url;
     }
   }
 
