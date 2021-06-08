@@ -17,7 +17,36 @@ export class AppComponent {
   userMask: HTMLImageElement = null;
   ready: boolean = false;
   canvas: HTMLCanvasElement;
-  masks: string[] = ['biden', 'trump', 'bernie', 'npc', 'rage', 'troll', 'shades'];
+  masks: string[] = 
+    ['biden.png', 
+    'trump.png', 
+    'bernie.png',
+    'pete.png', 
+    'hillary.png',
+    'hunter.png',
+    'epstein.png',
+    'maxwell.png',
+    'jong-un.png',
+    'il-sung.png',
+    'xi.png',
+    'lenin.png',
+    'stalin.png',
+    'npc.png', 
+    'doomer.svg',
+    'doomjak.svg',
+    'so-true.png',
+    'wojak-no.svg',
+    'rage.png', 
+    'troll.png',
+    'yea.svg', 
+    'cool.png',
+    'brow.png',
+    'sadness.png',
+    'cringe.png',
+    'disgust.png',
+    'panting.svg',
+    'shades.png',
+  ];
 
   faces : Face[] = null;
  
@@ -77,7 +106,7 @@ export class AppComponent {
       return this.userMask;
     }
     let source = document.createElement("img");
-    source.src = "assets/images/" + mask + ".png";
+    source.src = "assets/images/" + mask;
     return source;
   }
 

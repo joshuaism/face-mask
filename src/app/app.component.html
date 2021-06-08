@@ -3,7 +3,7 @@
     <mat-radio-group  #radioGroup="matRadioGroup">
         <mat-radio-button value="none" [checked]="true">[none]</mat-radio-button>
         <mat-radio-button *ngFor="let m of masks" [value]="m">
-            <img src="assets/images/{{m}}.png">
+            <img src="assets/images/{{m}}">
         </mat-radio-button>
         <mat-radio-button value="user_source">
             <input type="file" accept="image/*" id="user_mask" (change)="handleMaskInput($event.target.files)">
